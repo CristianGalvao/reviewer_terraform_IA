@@ -1,4 +1,3 @@
-
 [CRÍTICO] SEGURANÇA: Credenciais Expostas no Código (Hardcoded)
 - Arquivo: main.tf (Recurso: aws_db_instance.postgres_db)
 - Problema: A senha do banco de dados ("SenhaSuperSecreta123!") estava exposta em texto plano. Se esse código for para o GitHub, qualquer pessoa com acesso ao repositório poderá ler a senha.
@@ -32,3 +31,4 @@
 - Arquivo: main.tf (Recurso: aws_ebs_volume.data_volume)
 - Problema: Uso de volumes do tipo "gp2" para um disco grande de 500 GB.
 - Impacto: O tipo "gp3" da AWS entrega mais performance básica (IOPS) e é 20% mais barato por gigabyte do que o antigo gp2, gerando economia imediata no faturamento da nuvem.
+
