@@ -1,0 +1,34 @@
+
+[CRÍTICO] SEGURANÇA: Credenciais Expostas no Código (Hardcoded)
+- Arquivo: main.tf (Recurso: aws_db_instance.postgres_db)
+- Problema: A senha do banco de dados ("SenhaSuperSecreta123!") estava exposta em texto plano. Se esse código for para o GitHub, qualquer pessoa com acesso ao repositório poderá ler a senha.
+- Impacto: Risco altíssimo de vazamento e invasão de dados.
+
+[CRÍTICO] SEGURANÇA: Banco de Dados Exposto para o Mundo
+- Arquivo: main.tf (Recurso: aws_db_instance.postgres_db)
+- Problema: O parâmetro 'publicly_accessible' estava configurado como 'true'. Isso abre uma porta pública na internet para o seu banco de dados de produção.
+- Impacto: Ataques de força bruta automatizados na internet vão tentar invadir o banco continuamente.
+
+[ALTO] SEGURANÇA: Porta SSH (22) Aberta para Qualquer IP
+- Arquivo: main.tf (Recurso: aws_security_group.allow_ssh)
+- Problema: O bloco de entrada (ingress) permitia tráfego na porta 22 vindo de "0.0.0.0/0" (qualquer computador do mundo).
+- Impacto: Permite varreduras de hackers na porta de administração do servidor. Deve ser restrito ao IP da empresa ou VPN.
+
+[ALTO] SEGURANÇA: Bucket S3 sem Criptografia e Proteção de Acesso
+- Arquivo: main.tf (Recurso: aws_s3_bucket.public_data)
+- Problema: Um bucket nomeado como "dados-sensiveis-clientes" foi criado sem criptografia em repouso ativa e sem um bloco explícito de bloqueio a acessos públicos.
+- Impacto: Risco de violação de leis de privacidade (como a LGPD) caso os dados guardados em disco sejam acessados indevidamente.
+
+[ALTO] SEGURANÇA: Chaves de Acesso IAM Estáticas no Git
+- Arquivo: main.tf (Recurso: aws_iam_access_key.admin_key)
+- Problema: Criação de chaves de acesso permanentes via código. Chaves estáticas mapeadas para usuários administradores são a maior causa de sequestro de contas AWS do mercado.
+
+[MÉDIO] CUSTO: Instância Superdimensionada para Ambiente de Dev
+- Arquivo: main.tf (Recurso: aws_instance.web_server)
+- Problema: Uso do tipo de instância "c5.4xlarge" (focada em alta performance computacional) para um servidor com a tag de "dev" (desenvolvimento).
+- Impacto: Desperdício financeiro severo. Ambientes de desenvolvimento devem rodar em instâncias menores e baratas (como a família t3).
+
+[BAIXO] CUSTO & PERFORMANCE: Tipo de Disco Desatualizado (EBS gp2)
+- Arquivo: main.tf (Recurso: aws_ebs_volume.data_volume)
+- Problema: Uso de volumes do tipo "gp2" para um disco grande de 500 GB.
+- Impacto: O tipo "gp3" da AWS entrega mais performance básica (IOPS) e é 20% mais barato por gigabyte do que o antigo gp2, gerando economia imediata no faturamento da nuvem.
