@@ -33,7 +33,7 @@ print("Enviando o diff para a IA analisar...")
 try:
     response = client.chat.completions.create(
         
-        model="llama3-70b-8192",
+        model="llama-3.3-70b-specdec",
         messages=[
             {"role":"system", "content": prompt_ia},
             {"role": "user", "content": f"Analise as correções deste git diff:\n\n{git_diff}"}
