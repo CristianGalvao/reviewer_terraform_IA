@@ -4,7 +4,7 @@ import os
 
 client = Groq()
 
-file_simulation_diff = "pr_diff.txt" = "./terraform/simulation_pr.diff"
+file_simulation_diff = "pr_diff.txt"
 
 try:
     with open(file_simulation_diff, "r", encoding="utf-8") as file :
